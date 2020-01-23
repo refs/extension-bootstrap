@@ -3,8 +3,6 @@ package command
 import (
 	"context"
 	"log"
-	"os"
-	"os/signal"
 	"syscall"
 
 	"github.com/micro/cli"
@@ -36,19 +34,7 @@ func ServerCommand() cli.Command {
 				cancel()
 			})
 
-			stop := make(chan os.Signal, 1)
-
-			gr.Add(func() error {
-				signal.Notify(stop, syscall.SIGTERM)
-
-				<-stop // empty the channel
-
-				return nil
-			}, func(_ error) {
-				close(stop)
-				cancel() // cancel context so the server stops
-			})
-
+			gr.Add(run.SignalHandler(ctx, syscall.SIGKILL))
 			return gr.Run()
 		},
 	}
