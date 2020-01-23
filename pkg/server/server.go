@@ -3,6 +3,8 @@ package server
 // this package hooks the service implementation (also known as a handler) as a go-micro service
 
 import (
+	"context"
+
 	"github.com/micro/go-micro"
 	"github.com/owncloud/ocis-pkg/service/grpc"
 	"github.com/refs/extension-bootstrap/pkg/proto"
@@ -10,13 +12,14 @@ import (
 )
 
 // Service undocummented
-func Service() (micro.Service, error) {
+func Service(ctx context.Context) (micro.Service, error) {
 
 	// create our grpc service
 	service := grpc.NewService(
 		grpc.Namespace("com.hello"),
 		grpc.Name("yeller"),
 		grpc.Address("localhost:10001"),
+		grpc.Context(ctx),
 	)
 
 	// declare our service handler
