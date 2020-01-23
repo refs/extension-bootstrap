@@ -8,6 +8,11 @@ import (
 
 // here we implement the compiled go-micro service
 
+// NewService returns a new service
+func NewService() Service {
+	return Service{}
+}
+
 // Service implements the YellerService interface
 type Service struct{}
 
