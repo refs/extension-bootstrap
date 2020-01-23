@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+service YellerService {
+    rpc Yell (YellerRequest) returns (YellerResponse);
+}
+
+message YellerRequest {
+    string message = 1;
+}
+
+message YellerResponse {
+    string response = 1;
+}
