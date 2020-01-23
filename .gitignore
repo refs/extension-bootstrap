@@ -1,0 +1,3 @@
+# ignore protobuf compilations for the purposes of this demo
+*.pb.micro.go
+*.pb.go
