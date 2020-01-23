@@ -8,11 +8,22 @@ This project constitutes the foundation of an ocis extension.
 .
 ├── README.md
 ├── cmd
+│   └── yeller
+│       └── main.go
 ├── go.mod
+├── go.sum
 └── pkg
+    ├── command
+    │   ├── root.go
+    │   └── server.go
     ├── proto
+    │   ├── yeller.pb.go
+    │   ├── yeller.pb.micro.go
+    │   └── yeller.proto
     ├── server
+    │   └── server.go
     └── service
+        └── service.go
 ```
 
 # Creating your own extension 🤖
