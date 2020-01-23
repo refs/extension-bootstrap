@@ -27,3 +27,4 @@ This project constitutes the foundation of an ocis extension.
 
 - [protobuf language syntax](https://developers.google.com/protocol-buffers/docs/proto3)
 - [as a cli app we use urfave/cli@v1](https://github.com/urfave/cli/blob/master/docs/v1/manual.md)
+- [on go signal channels](https://gobyexample.com/signals)

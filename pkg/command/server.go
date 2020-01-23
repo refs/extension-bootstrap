@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"syscall"
 
 	"github.com/micro/cli"
 	"github.com/oklog/run"
@@ -17,7 +18,6 @@ func ServerCommand() cli.Command {
 		Name:  "start",
 		Usage: "starts the yeller service",
 		Action: func(c *cli.Context) error {
-			// do all the channel magic to block
 			var (
 				gr          = run.Group{}
 				ctx, cancel = context.WithCancel(context.Background())
@@ -36,20 +36,18 @@ func ServerCommand() cli.Command {
 				cancel()
 			})
 
-			{
-				stop := make(chan os.Signal, 1)
+			stop := make(chan os.Signal, 1)
 
-				gr.Add(func() error {
-					signal.Notify(stop, os.Interrupt)
+			gr.Add(func() error {
+				signal.Notify(stop, syscall.SIGTERM)
 
-					<-stop
+				<-stop // empty the channel
 
-					return nil
-				}, func(err error) {
-					close(stop)
-					cancel()
-				})
-			}
+				return nil
+			}, func(_ error) {
+				close(stop)
+				cancel() // cancel context so the server stops
+			})
 
 			return gr.Run()
 		},
